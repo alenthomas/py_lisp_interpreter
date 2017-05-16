@@ -21,7 +21,11 @@ def read_from_tokens(tokens):
         raise SyntaxError("unexpected EOF while reading")
     token = tokens.pop(0)
     if token is "(":
-        pass
+        new_list = list()
+        while tokens[0] is not ")":
+            new_list.append(read_from_tokens(tokens))
+        tokens.pop(0)
+        return new_list
     elif token is ")":
         raise SyntaxError("unexpected ')'")
     else:
@@ -45,7 +49,9 @@ def eval():
 def interface():
     string = input()
     tokens=tokenize(string)
-    print(tokens)
+    val = read_from_tokens(tokens)
+    print("tokens", tokens)
+    print("AST", val)
 
 
 
