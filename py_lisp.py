@@ -1,11 +1,10 @@
-def tokenize():
+def tokenize(string):
     '''
     program = "(begin (define r 10))"
     tokenize(program)
     ['(', 'begin', '(', 'define', 'r', '10', ')', ')']
     '''
-    pass
-
+    return string.replace('(', '( ').replace(')', ' )').split()
 def parse():
     '''
     program = "(begin (define r 10) (* pi (* r r)))"
@@ -21,5 +20,11 @@ def eval():
     '''
     pass
 
-def input():
-    pass
+def interface():
+    string = input()
+    tokens=tokenize(string)
+    print(tokens)
+
+
+
+interface()
