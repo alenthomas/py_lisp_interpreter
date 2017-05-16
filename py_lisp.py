@@ -4,7 +4,23 @@ def tokenize(string):
     tokenize(program)
     ['(', 'begin', '(', 'define', 'r', '10', ')', ')']
     '''
-    return string.replace('(', ' ( ').replace(')', ' ) ').split()
+    tokens = string.replace("(", " ( ").replace(")", " ) ").split()
+    return tokens
+
+def atom(token):
+    pass
+
+def read_from_tokens(tokens):
+    if not tokens:
+        raise SyntaxError("unexpected EOF while reading")
+    token = tokens.pop(0)
+    if token is "(":
+        pass
+    elif token is ")":
+        raise SyntaxError("unexpected ')'")
+    else:
+        return atom(token)
+
 def parse():
     '''
     program = "(begin (define r 10) (* pi (* r r)))"
