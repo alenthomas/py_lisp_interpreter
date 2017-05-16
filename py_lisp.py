@@ -8,7 +8,13 @@ def tokenize(string):
     return tokens
 
 def atom(token):
-    pass
+    try:
+        return int(token)
+    except ValueError:
+        try:
+            return float(token)
+        except ValueError:
+            return str(token)
 
 def read_from_tokens(tokens):
     if not tokens:
