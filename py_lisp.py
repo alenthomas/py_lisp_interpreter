@@ -4,7 +4,7 @@ def tokenize(string):
     tokenize(program)
     ['(', 'begin', '(', 'define', 'r', '10', ')', ')']
     '''
-    return string.replace('(', '( ').replace(')', ' )').split()
+    return string.replace('(', ' ( ').replace(')', ' ) ').split()
 def parse():
     '''
     program = "(begin (define r 10) (* pi (* r r)))"
