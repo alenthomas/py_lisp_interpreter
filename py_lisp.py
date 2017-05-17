@@ -50,15 +50,45 @@ def parse():
     pass
 
 def eval(x, env):
-    if x[0] == 'def':
-        pass
+    '''
+    Evaluate an expression in an environment
+    '''
+    print("first x:", x)
+    if isinstance(x, str):
+        '''
+        checks for string;
+        specifically our keywords/operators
+        if found returns the corresponding python function
+        '''
+        print("isinstance str:", x)
+        print("env[x]:", env[x])
+        return env[x]
+    elif not isinstance(x, list):
+        '''
+        checks if not a list
+        else it should be a literal specifically atom
+        '''
+        print("isinstance list:", x)
+        return x
     else:
-        return global_env[x[0]](x[1], x[2]) # test for add
+        '''
+        if not (list, keyword, number)
+        probably expression
+        '''
+        print("in else, calls eval with first arg:", x[0])
+        proc = eval(x[0], env)
+        print("proc :", proc)
+        print("x[1:] :", x[1:])
+        args = [eval(arg, env) for arg in x[1:]]
+        print("args :", args)
+        print("proc(*args) :", proc(*args))
+        return proc(*args)
+
 def interface():
     string = input()
     tokens=tokenize(string)
     val = read_from_tokens(tokens)
-    print("tokens", tokens)
+    #print("tokens", tokens)
     print("AST", val)
     result = eval(val, global_env)
     print("Result", result)
