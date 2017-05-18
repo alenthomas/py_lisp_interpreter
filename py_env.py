@@ -10,6 +10,9 @@ def standard_env():
         '-': op.sub,
         '*': op.mul,
         '/': op.truediv,
+        '>': op.gt,
+        '<': op.lt,
+        '=': op.eq,
     })
     return env
 
