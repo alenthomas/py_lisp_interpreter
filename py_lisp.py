@@ -49,7 +49,7 @@ def parse():
     '''
     pass
 
-def eval(x, env):
+def lisp_eval(x, env):
     '''
     Evaluate an expression in an environment
     '''
@@ -70,16 +70,24 @@ def eval(x, env):
         '''
         print("isinstance list:", x)
         return x
+    elif x[0] == "if":
+        '''
+        if the condition is 'if' evaluate it in python
+        call the eval with the output of if expression
+        '''
+        (_, condition, true_exp, false_exp) = x
+        exp = (true_exp if lisp_eval(condition, env) else false_exp)
+        return lisp_eval(exp, env)
     else:
         '''
         if not (list, keyword, number)
         probably expression
         '''
         print("in else, calls eval with first arg:", x[0])
-        proc = eval(x[0], env)
+        proc = lisp_eval(x[0], env)
         print("proc :", proc)
         print("x[1:] :", x[1:])
-        args = [eval(arg, env) for arg in x[1:]]
+        args = [lisp_eval(arg, env) for arg in x[1:]]
         print("args :", args)
         print("proc(*args) :", proc(*args))
         return proc(*args)
@@ -90,7 +98,7 @@ def interface():
     val = read_from_tokens(tokens)
     #print("tokens", tokens)
     print("AST", val)
-    result = eval(val, global_env)
+    result = lisp_eval(val, global_env)
     print("Result", result)
 
 
