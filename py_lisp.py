@@ -22,7 +22,7 @@ def atom(token):
         except ValueError:
             return str(token)
 
-def read_from_tokens(tokens):
+def lisp_ast(tokens):
     '''
     recursivley reads through tokens
     returns an AST in the form of a list
@@ -33,7 +33,7 @@ def read_from_tokens(tokens):
     if token is "(":
         new_list = list()
         while tokens[0] is not ")":
-            new_list.append(read_from_tokens(tokens))
+            new_list.append(lisp_ast(tokens))
         tokens.pop(0)
         return new_list
     elif token is ")":
@@ -41,13 +41,13 @@ def read_from_tokens(tokens):
     else:
         return atom(token)
 
-def parse():
+def parse(lisp_string):
     '''
     program = "(begin (define r 10) (* pi (* r r)))"
     parse(program)
     ['begin', ['define', 'r', 10], ['*', 'pi', ['*', 'r', 'r']]]
     '''
-    pass
+    return lisp_ast(tokenize(lisp_string))
 
 def lisp_eval(x, env):
     '''
@@ -97,13 +97,9 @@ def lisp_eval(x, env):
 
 def interface():
     string = input()
-    tokens=tokenize(string)
-    val = read_from_tokens(tokens)
-    #print("tokens", tokens)
-    print("AST", val)
-    result = lisp_eval(val, global_env)
+    parsed = parse(string)
+    print("AST", parsed)
+    result = lisp_eval(parsed, global_env)
     print("Result", result)
-
-
 
 interface()
