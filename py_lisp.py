@@ -78,6 +78,9 @@ def lisp_eval(x, env):
         (_, condition, true_exp, false_exp) = x
         exp = (true_exp if lisp_eval(condition, env) else false_exp)
         return lisp_eval(exp, env)
+    elif x[0] == "define":
+        (_, var, exp) = x
+        env[var] = lisp_eval(exp, env)
     else:
         '''
         if not (list, keyword, number)
