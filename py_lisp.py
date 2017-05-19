@@ -102,4 +102,6 @@ def interface():
     result = lisp_eval(parsed, global_env)
     print("Result", result)
 
-interface()
+
+if __name__ == "__main__":
+    interface()
