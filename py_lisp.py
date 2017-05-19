@@ -17,6 +17,11 @@ def lisp_ast(tokens):
     if not tokens:
         raise SyntaxError("unexpected EOF while reading")
     token = tokens.pop(0)
+    if token == "'":
+        _list = list("'")
+        while tokens[0] is not ")":
+            _list.append(lisp_ast(tokens))
+        return _list
     if token is "(":
         _list = list()
         while tokens[0] is not ")":
@@ -42,6 +47,12 @@ def lisp_eval(x, env):
         return env[x]
     elif not isinstance(x, list):
         return x
+    elif (x[0] == "quote"):
+        (_, exp) = x
+        return exp
+    elif (x[0] == "'"):
+        (_, exp) = x
+        return exp
     elif x[0] == "if":
         (_, condition, true_exp, false_exp) = x
         exp = (true_exp if lisp_eval(condition, env) else false_exp)
