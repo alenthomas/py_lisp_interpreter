@@ -29,7 +29,13 @@ def lisp_ast(tokens):
         return atom(token)
 
 def parse(lisp_string):
-    return lisp_ast(tokenize(lisp_string))
+    tokens = tokenize(lisp_string)
+    if tokens.count("(") != tokens.count(")"):
+        raise SyntaxError("unbalanced parenthesis")
+    else:
+        ast = lisp_ast(tokens)
+        print(ast)
+        return ast
 
 def lisp_eval(x, env):
     if isinstance(x, str):
@@ -51,7 +57,9 @@ def lisp_eval(x, env):
 def interface():
     string = input()
     parsed = parse(string)
+    print("AST", parsed)
     result = lisp_eval(parsed, global_env)
+    print(result)
 
 if __name__ == "__main__":
     interface()
