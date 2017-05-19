@@ -13,6 +13,8 @@ def standard_env():
         '>': op.gt,
         '<': op.lt,
         '=': op.eq,
+        'cons': lambda x: x[0],
+        'cdr': lambda x: x[1:],
     })
     return env
 
