@@ -1,4 +1,14 @@
-from py_env import global_env
+from py_env import global_env, Env
+
+class Function(object):
+
+    def __init__(self, params, body, env):
+        self.params = params
+        self.body = body
+        self.env = env
+
+    def __call__(self, *args):
+        return lisp_eval(self.body, Env(self.params, args, self.env))
 
 def tokenize(string):
     tokens = string.replace("(", " ( ").replace(")", " ) ").split()
@@ -39,12 +49,12 @@ def parse(lisp_string):
         raise SyntaxError("unbalanced parenthesis")
     else:
         ast = lisp_ast(tokens)
-        print(ast)
+        #print(ast)
         return ast
 
-def lisp_eval(x, env):
+def lisp_eval(x, env=global_env):
     if isinstance(x, str):
-        return env[x]
+        return env.find(x)[x]
     elif not isinstance(x, list):
         return x
     elif (x[0] == "quote"):
