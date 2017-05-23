@@ -1,10 +1,21 @@
 import math
 import operator as op
 
-Env = dict()
+class Env(dict):
+
+    def __init__(self, params=(), args=(), outer=None):
+        self.update(zip(params, args))
+        self.outer = outer
+
+    def find(self, var):
+        if var in self:
+            return self
+        else:
+            return self.outer.find(var)
+
 
 def standard_env():
-    env = Env
+    env = Env()
     env.update({
         '+': op.add,
         '-': op.sub,
