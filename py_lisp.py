@@ -70,6 +70,9 @@ def lisp_eval(x, env=global_env):
     elif x[0] == "define":
         (_, var, exp) = x
         env[var] = lisp_eval(exp, env)
+    elif x[0] == "lambda":
+        (_, params, body) = x
+        return Function(params, body, env)
     else:
         function = lisp_eval(x[0], env)
         args = [lisp_eval(arg, env) for arg in x[1:]]
