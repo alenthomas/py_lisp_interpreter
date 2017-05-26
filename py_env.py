@@ -1,5 +1,6 @@
 import math
 import operator as op
+from helpers import add, sub, mul, div
 
 class Env(dict):
 
@@ -13,14 +14,13 @@ class Env(dict):
         else:
             return self.outer.find(var)
 
-
 def standard_env():
     env = Env()
     env.update({
-        "+"   : op.add,
-        "-"   : op.sub,
-        "*"   : op.mul,
-        "/"   : op.truediv,
+        "+"   : add,
+        "-"   : sub,
+        "*"   : mul,
+        "/"   : div,
         ">"   : op.gt,
         "<"   : op.lt,
         "="   : op.eq,
