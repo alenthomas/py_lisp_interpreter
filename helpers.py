@@ -1,23 +1,25 @@
+from functools import reduce
+
 def add(*args):
-    total = 0
-    for num in args:
-        total += num
-    return total
+    if args:
+        return reduce((lambda x,y: x+y), args)
+    else:
+        return 0
 
 def sub(*args):
-    total = 0
-    for num in args:
-        total -= num
-    return total
+    if len(args) == 1:
+        return -args[0]
+    else:
+        return reduce((lambda x,y: x-y), args)
 
 def mul(*args):
-    total = 1
-    for num in args:
-        total *= num
-    return total
+    if args:
+        return reduce((lambda x,y: x*y), args)
+    else:
+        return 1
 
 def div(*args):
-    total = 1
-    for num in args:
-        total /= num
-    return total
+    if len(args) == 1:
+        return 1/args[0]
+    else:
+        return reduce((lambda x,y: x/y), args)
