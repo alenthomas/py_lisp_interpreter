@@ -2,10 +2,11 @@ from py_env import global_env, Env
 
 class Function(object):
 
-    def __init__(self, params, body, env):
+    def __init__(self, params, body, env, macro=False):
         self.params = params
         self.body = body
         self.env = env
+        self.macro = macro
 
     def __call__(self, *args):
         return lisp_eval(self.body, Env(self.params, args, self.env))
