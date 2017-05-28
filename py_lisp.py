@@ -74,6 +74,12 @@ def lisp_eval(x, env=global_env):
     elif x[0] == "lambda":
         (_, params, body) = x
         return Function(params, body, env)
+    elif x[0] == "defmacro":
+        '''
+        (defmacro name (params) (body-with-params))
+        '''
+        (_, name, params, body) = x
+        env[name] = Function(params, body, env, True)
     else:
         function = lisp_eval(x[0], env)
         args = [lisp_eval(arg, env) for arg in x[1:]]
