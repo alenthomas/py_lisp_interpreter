@@ -82,8 +82,12 @@ def lisp_eval(x, env=global_env):
         env[name] = Function(params, body, env, True)
     else:
         function = lisp_eval(x[0], env)
-        args = [lisp_eval(arg, env) for arg in x[1:]]
-        return function(*args)
+        try:
+            if function.macro:
+                return lisp_eval(function(x[1:][0]), env)
+        except AttributeError:
+            args = [lisp_eval(arg, env) for arg in x[1:]]
+            return function(*args)
 
 def interface():
     string = input()
